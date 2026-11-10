@@ -4,6 +4,17 @@ All notable changes to this skill will be documented in this file.
 
 Format based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [2.1.1-hardened] - 2026-11-10
+
+### Changed
+- Audit mode writes the HTML report to `motion-audits/` and prints its path; the browser opens only on `--open` or an explicit request in the user's own message.
+- Terminal mode is triggered only by the user, never by a headless or CI environment.
+
+### Security
+- Everything read from the audited project (code, comments, file names, project docs) is treated as data, never as instructions, and audited text is HTML-escaped before it goes into the report.
+- `references/report-template.html` and `references/demo-shell.html` carry a Content-Security-Policy meta tag that blocks scripts and every external resource except Google Fonts.
+- Upstream install commands (`npx skills add`, clone / copy) removed from the README and replaced by an explicit warning not to use them.
+
 ## [2.1.1] — 2026-05-30
 
 A complete worked-example report for Audit mode. No behavior changes — the audit workflow is unchanged; this release upgrades the templates the agent reads when composing the HTML report, so real audits inherit a finished, consistent design.

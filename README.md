@@ -6,9 +6,7 @@ Distilled from the publicly published work of **Emil Kowalski**, **Jakub Krehel*
 
 ## Installation
 
-```bash
-npx skills add kylezantos/design-motion-principles
-```
+This fork is used pinned: its `hardened` branch is a submodule of the owner's private design-skills repo. Do not install with `npx skills add kylezantos/design-motion-principles` or by cloning upstream: both fetch upstream's latest, unreviewed code. Prefer exposing the skill per project (for example in that project's `.claude/skills/`) rather than in `~/.claude/skills`. Before installing or updating it, read SECURITY-NOTES.md in the owner's design-skills repo.
 
 Works with Claude Code, Cursor, Windsurf, and other AI coding assistants.
 
@@ -40,7 +38,7 @@ The skill detects which mode you want from your request. If it's ambiguous, it a
 
 3. **Anti-AI-slop checklist** (Audit) — A quality gate that flags the recognizable motion fingerprints of AI-generated UIs: pulsing indicators, blur-everywhere entrances, hover-scale-on-everything, stagger-spam, bouncy springs on utility actions, uniform fade-ins, motion-on-mount for static content. Each category has a frequency heuristic so single intentional uses don't trip it.
 
-4. **Branded HTML report** (Audit) — The default audit output is a self-contained HTML file with auto-looping CSS demos beside each Critical and Important finding, so you can *see* the recommended motion instead of reading code. Writes to `motion-audits/`, opens in your browser. `--terminal` falls back to the inline markdown report for headless/CI use.
+4. **Branded HTML report** (Audit) — The default audit output is a self-contained HTML file with auto-looping CSS demos beside each Critical and Important finding, so you can *see* the recommended motion instead of reading code. Writes to `motion-audits/` and prints the path; it opens in your browser only if you ask (for example `--open`). `--terminal` falls back to the inline markdown report for headless/CI use.
 
 5. **Motion cookbook** (Create) — A single, consolidated recipe library: enter/exit animations, easing, springs, clip-path, `@property`, shared-layout/FLIP, scroll-driven animation.
 
@@ -105,18 +103,7 @@ skills/
 
 ## Manual Installation
 
-If you prefer not to use `npx skills add`:
-
-**Global (all projects):**
-```bash
-git clone https://github.com/kylezantos/design-motion-principles.git
-cp -r design-motion-principles/skills/design-motion-principles ~/.claude/skills/
-```
-
-**For Cursor:**
-```bash
-cp -r design-motion-principles/skills/design-motion-principles ~/.cursor/skills/
-```
+See [Installation](#installation): use the pinned submodule, not a fresh clone of upstream.
 
 ## Credits
 

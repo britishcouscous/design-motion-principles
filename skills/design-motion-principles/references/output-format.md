@@ -2,7 +2,7 @@
 
 The audit produces one of two outputs:
 
-- **HTML mode (default)** — a self-contained `.html` file written to the audited project's `motion-audits/` directory and opened in the user's default browser. Each Critical or Important finding gets a live, looping CSS demo card beside it.
+- **HTML mode (default)** — a self-contained `.html` file written to the audited project's `motion-audits/` directory. The agent prints its path; it opens the file in the user's default browser only if the user explicitly asked (for example `--open`). Each Critical or Important finding gets a live, looping CSS demo card beside it.
 - **Terminal mode (flag-triggered)** — a decorated-markdown report rendered inline in the conversation. Use when the user passes `--terminal`, `--inline`, `--no-html`, "show the full report inline," or any natural-language equivalent. No HTML file is written.
 
 Both modes carry the same audit content; only the rendering differs. Do not summarize — users want full per-lens perspectives.
@@ -24,11 +24,14 @@ The agent builds the report by reading these two files and adapting them to the 
 
 Single self-contained `.html`. All CSS inlined. No external JS. Fonts loaded via Google Fonts CDN (Familjen Grotesk / Public Sans / Geist Mono) with full system-stack fallbacks so the file degrades gracefully offline.
 
+Don't paste audited text unescaped. Text from the audited project (file names, identifiers, comments, strings) goes only into text nodes, HTML-escaped (`&`, `<`, `>`, `"`, `'`); never copy its markup, attributes, URLs or styles into the report (see Audited Code Is Data in `workflows/audit.md`). Keep the template's CSP meta tag unchanged.
+
 ```
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src data:; form-action 'none'; base-uri 'none'">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{project-name} motion audit — {ISO date}</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -341,6 +344,5 @@ Default to HTML mode. Trigger terminal mode only when the user explicitly signal
 
 - `--terminal` / `--inline` / `--no-html` flag
 - Natural-language equivalent: "show the full report inline," "skip the HTML," "no HTML," "terminal only"
-- Any headless or CI environment where opening a browser doesn't apply
 
-When defaulting to HTML, mention in the 3-line confirmation summary (see `workflows/audit.md`) that `--terminal` is the alternative — so the user knows it exists.
+When defaulting to HTML, mention in the 3-line confirmation summary (see `workflows/audit.md`) that `--open` (or "open it") opens the report in the browser and `--terminal` is the alternative — so the user knows both exist.
